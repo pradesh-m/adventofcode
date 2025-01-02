@@ -1,4 +1,6 @@
 from collections import defaultdict
+TEST_PATH = "2024/day1/day1test.txt"
+PROBLEM_PATH = "2024/day1/day1data.txt"
 
 first = []
 second = []
@@ -7,7 +9,7 @@ difference = 0
 similarity_score = 0
 
 
-with open('day1data.txt', 'r') as file:
+with open(TEST_PATH, 'r') as file:
     for line in file:
         line.strip()
         curr_line = line.split()
@@ -23,5 +25,4 @@ for i in range(len(first)):
     similarity_score += first[i]*second_count[first[i]]
 
 print("difference: ", difference)
-
 print("similarity score: ", similarity_score)
