@@ -1,46 +1,30 @@
-TEST_PATH = "day4test.txt"
-PROBLEM_PATH = "day4data.txt"
+TEST_PATH = "2024/day4/day4test.txt"
+PROBLEM_PATH = "2024/inputdata/day4data.txt"
 
 grid = []
-with open(PROBLEM_PATH, 'r',) as file:
+
+with open(PROBLEM_PATH, 'r') as file:
     for line in file:
-        curr_line = []
-        for char in line:
-            if char != "\n":
-                curr_line.append(char)
-        grid.append(curr_line)
-    
-print(grid)
+        grid.append(line.strip())
 
-def get_neighbors(currX, currY, grid):
-    dirs = [
-        (1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
-    neighbors = []
-    for dx, dy in dirs:
-        newX, newY = currX + dx, currY + dy
-        if 0 <= newX < len(grid) and 0 <= newY < len(grid[0]):
-            neighbors.append((newX, newY))
-    return neighbors
-            
+DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+
 target = "XMAS"
+target_len = len(target)
 
-def dfs(currX, currY, graph, target, index, visited):
-    if index == len(target): 
-        return 1
+def check_word(x, y, dx, dy, grid, target):
+    for i in range(target_len):
+        nx, ny = x + (i * dx), y + (i * dy)
+        if not (0 <= nx < len(grid) and 0 <= ny < len(grid[0]) and grid[nx][ny] == target[i]):
+            return False
+    return True
 
-    visited.add((currX, currY))
-    count = 0
-    for neighborX, neighborY in get_neighbors(currX, currY, graph):
-        if (neighborX, neighborY) not in visited and graph[neighborX][neighborY] == target[index]:
-            count += dfs(neighborX, neighborY, graph, target, index + 1, visited)
-    return count
-
-
-result = 0
+count = 0
 for i in range(len(grid)):
     for j in range(len(grid[0])):
-        if grid[i][j] == target[0]:
-            result += dfs(i, j, grid, target, 1, set())
+        if grid[i][j] == target[0]: 
+            for dx, dy in DIRS:
+                if check_word(i, j, dx, dy, grid, target):
+                    count += 1
 
-print(result)
-    
+print("count:", count)
