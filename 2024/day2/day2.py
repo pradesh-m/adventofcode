@@ -24,11 +24,11 @@ def invalid_indices(flist):
         result.append(invalid_report_indices(report))
     return result
         
-def remove_one(faulty_indices, report_index):
-    for i in range(len(faulty_indices)):
-        copied_list = file_list[report_index][:]
-        copied_list.pop(faulty_indices[i])
-        if len(invalid_report_indices(copied_list)) == 0:
+def remove_one(report_index):
+    for i in range(len(file_list[report_index])):
+        new_report = file_list[report_index].copy()
+        new_report.pop(i)
+        if not invalid_report_indices(new_report):
             return True
     return False
 
@@ -40,7 +40,7 @@ for i, report in enumerate(invalid_indices_result):
     if not report:
         result_p1 += 1
         result_p2 += 1
-    elif remove_one(report, i):
+    elif remove_one(i):
         result_p2 += 1
 
 print("Part 1 Result:", result_p1)
