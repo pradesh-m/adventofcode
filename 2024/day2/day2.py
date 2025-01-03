@@ -1,7 +1,6 @@
 TEST_PATH = "2024/day2/day2test.txt"
 PROBLEM_PATH = "2024/day2/day2data.txt"
 
-count = 0 
 file_list = []
 
 with open(PROBLEM_PATH, 'r',) as file:
