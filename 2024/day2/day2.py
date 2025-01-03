@@ -14,10 +14,8 @@ def invalid_report_indices(report):
     for i in range(1, len(report)):
         if report[i] < report[i-1] and report_increasing == True or report[i] > report[i-1] and report_increasing == False:
             faulty_indices.append(i)
-            continue
-        if not 1 <= abs(report[i-1]-report[i]) <= 3:
+        elif not 1 <= abs(report[i-1]-report[i]) <= 3:
             faulty_indices.append(i)
-            continue 
     return faulty_indices
 
 def invalid_indices(flist):
