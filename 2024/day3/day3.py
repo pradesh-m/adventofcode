@@ -1,8 +1,5 @@
-TEST_PATH = "/Users/pradeshmainali/Desktop/advent of code/2024/day3/day3test.txt"
-PROBLEM_PATH = "/Users/pradeshmainali/Desktop/advent of code/2024/day3/day3data.txt"
-
-
-# mul(32, 32)
+TEST_PATH = "day3test.txt"
+PROBLEM_PATH = "day3data.txt"
 
 string = ""
 with open(PROBLEM_PATH, 'r',) as file:
