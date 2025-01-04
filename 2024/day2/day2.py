@@ -1,24 +1,47 @@
-PROBLEM_PATH = "inputdata/day4data.txt"
+TEST_PATH = "2024/day2/day2test.txt"
+PROBLEM_PATH = "2024/day2/day2data.txt"
 
-grid = []
-with open(PROBLEM_PATH, 'r') as file:
+file_list = []
+
+with open(PROBLEM_PATH, 'r',) as file:
     for line in file:
-        row_str = line.strip()
-        if row_str:
-            grid.append(row_str)
+        int_line = [int(x) for x in line.strip().split()]
+        file_list.append(int_line)
 
-n = len(grid)
-m = len(grid[0]) if n > 0 else 0
+def invalid_report_indices(report):
+    faulty_indices = []
+    report_increasing = report[1] > report[0]
+    for i in range(1, len(report)):
+        if report[i] < report[i-1] and report_increasing == True or report[i] > report[i-1] and report_increasing == False:
+            faulty_indices.append(i)
+        elif not 1 <= abs(report[i-1]-report[i]) <= 3:
+            faulty_indices.append(i)
+    return faulty_indices
 
-count = 0
+def invalid_indices(flist):
+    result = []
+    for report in flist:
+        result.append(invalid_report_indices(report))
+    return result
+        
+def remove_one(report_index):
+    for i in range(len(file_list[report_index])):
+        new_report = file_list[report_index].copy()
+        new_report.pop(i)
+        if not invalid_report_indices(new_report):
+            return True
+    return False
 
-for row in range(1, n - 1):
-    for col in range(1, m - 1):
-        if grid[row][col] == 'A':
-            diag1 = grid[row-1][col-1] + grid[row][col] + grid[row+1][col+1]
-            diag2 = grid[row+1][col-1] + grid[row][col] + grid[row-1][col+1]
+invalid_indices_result = invalid_indices(file_list)   
 
-            if diag1 in ["MAS", "SAM"] and diag2 in ["MAS", "SAM"]:
-                count += 1
+result_p2 = 0
+result_p1 = 0
+for i, report in enumerate(invalid_indices_result):
+    if not report:
+        result_p1 += 1
+        result_p2 += 1
+    elif remove_one(i):
+        result_p2 += 1
 
-print("count:", count)
+print("Part 1 Result:", result_p1)
+print("Part 2 Result:", result_p2)
