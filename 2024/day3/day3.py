@@ -41,9 +41,3 @@ for i, char in enumerate(string):
                 continue
             else:
                 result += int(first_int) * int(second_int)
-
-                
-            
-        
-    
-    
